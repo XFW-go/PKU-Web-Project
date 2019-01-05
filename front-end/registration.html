@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>File Manager</title>
+	<script src="/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+	<h2>Welcome to our file Manager</h2>
+	<div id="LoggingInput">
+        Username: <input type="text" id="username"><br>
+        Password: <input type="password" id="password"><br>
+        <button id="loginBtn">Log in</button>
+        <button id="registBtn">Register</button>
+    </div>
+</body>
+<script>
+	$(document).ready(() => {
+        $("#loginBtn").on("click", function(){
+            var name = $("#username").val();
+            var value = $("#password").val();
+
+            var auth = new URLSearchParams();
+            var params = new URLSearchParams();
+            var formData = new FormData();
+            auth.append("user", name);
+            auth.append("password", value);            
+            params.append("func", "login");
+            formData.append("auth", auth);
+            formData.append("params", params);
+
+            // Login Request
+            $.ajax({
+                url: "/cgi-bin/serve.py", 
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    var json = JSON.parse(response);
+                    localstorage.value = json.token
+                    if(json.errno==1)
+                    	alert("The password does not match the username or the username does not exist!");
+                    else
+                    {
+                    	var params_ = new URLSearchParams();
+                    	var formData_ = new FormData();
+                    	params_.append("func", "ls");
+                    	params_.append("path", name);
+                    	formData_.append("auth", auth);
+			            formData_.append("params", params_);
+
+			            // Request for contents
+                    	$.ajax({
+			            	async: false,
+			                url: "/cgi-bin/serve.py", 
+			                type: "POST",
+			                data: formData_,
+			                processData: false,
+			                contentType: false,
+			                success: function (resp) {
+			                    var json_ = JSON.parse(resp);
+			                    var files = JSON.parse(json_.list);
+			                    window.location.href='Main_page.html';
+			                },
+			                error: function (xhr_) {
+			                    alert(xhr_.status + " " + xhr_.statusText + "\n"
+			                        + xhr_.responseText);
+			                }
+			            });
+                    }
+                },
+                error: function (xhr) {
+                    alert(xhr.status + " " + xhr.statusText + "\n"
+                        + xhr.responseText);
+                }
+            });
+
+
+        });
+    });
+    $(document).ready(() => {
+        $("#registBtn").on("click", function(){
+            localStorage.name = $("#username").val();
+            localStorage.value = $("#password").val();
+
+            var auth = new URLSearchParams();         
+            var params = new URLSearchParams();
+            var formData = new FormData();
+            auth.append("user", localStorage.name);
+            auth.append("password", localStorage.value);
+            params.append("func", "reg");
+            formData.append("auth", auth);
+            formData.append("params", params);
+            $.ajax({
+                url: "/cgi-bin/serve.py", 
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    alert("You've already registered!\nPlease log in.");
+                },
+                error: function (xhr) {
+                    alert(xhr.status + " " + xhr.statusText + "\n"
+                        + xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
+</html>
