@@ -9,14 +9,46 @@
 <body>
 	<button id='Dload'>Download</button>
 	<button id='Gbuild'>Build your group</button>
-	<button>Check your group</button>
+	<button id='Gcheck'>Check your group</button>
+	<button id='cdup'>Go up one directory</button>
 	<form>
         <p>文件: <input id="file" name="file" type="file" /></p>
         <p><button id="Uload" type="button">上传</button></p>
     </form>
 </body>
 <script>
-	
+	var token = window.location.href.split('=')[1];
+	var auth = new URLSearchParams();
+	var params = new URLSearchParams();
+    var formData = new FormData();
+    auth.append("token", token);
+    params.append("func", "ls");
+    params.append("path", "/");
+    formData.append("auth", auth);
+    formData.append("params", params);
+
+    // Request for contents
+    $.ajax({
+        async: false,
+        url: "/cgi-bin/serve.py", 
+        type: "POST",
+        data: formData_,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+            var json = JSON.parse(response);
+            var files = JSON.parse(json.list);
+            if(json.errno==1)
+                alert("An error occurs");
+            else {
+                
+            }                              
+        },
+        error: function (xhr) {
+            alert(xhr.status + " " + xhr.statusText + "\n"
+                + xhr.responseText);
+        }
+    });
 </script>
 <script>
 	$("#Dload").click(Download());

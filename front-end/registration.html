@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>File Manager</title>
-	<script src="/jquery-3.3.1.min.js"></script>
+    <meta charset="UTF-8">
+    <title>File Manager</title>
+    <script src="/jquery-3.3.1.min.js"></script>
 </head>
 <body>
-	<h2>Welcome to our file Manager</h2>
-	<div id="LoggingInput">
+    <h2>Welcome to our file Manager</h2>
+    <div id="LoggingInput">
         Username: <input type="text" id="username"><br>
         Password: <input type="password" id="password"><br>
         <button id="loginBtn">Log in</button>
@@ -15,7 +15,7 @@
     </div>
 </body>
 <script>
-	$(document).ready(() => {
+    $(document).ready(() => {
         $("#loginBtn").on("click", function(){
             var name = $("#username").val();
             var value = $("#password").val();
@@ -38,36 +38,11 @@
                 contentType: false,
                 success: function (response) {
                     var json = JSON.parse(response);
-                    localstorage.value = json.token
+                    localstorage.value = json.token;
                     if(json.errno==1)
-                    	alert("The password does not match the username or the username does not exist!");
-                    else
-                    {
-                    	var params_ = new URLSearchParams();
-                    	var formData_ = new FormData();
-                    	params_.append("func", "ls");
-                    	params_.append("path", name);
-                    	formData_.append("auth", auth);
-			            formData_.append("params", params_);
-
-			            // Request for contents
-                    	$.ajax({
-			            	async: false,
-			                url: "/cgi-bin/serve.py", 
-			                type: "POST",
-			                data: formData_,
-			                processData: false,
-			                contentType: false,
-			                success: function (resp) {
-			                    var json_ = JSON.parse(resp);
-			                    var files = JSON.parse(json_.list);
-			                    window.location.href='Main_page.html';
-			                },
-			                error: function (xhr_) {
-			                    alert(xhr_.status + " " + xhr_.statusText + "\n"
-			                        + xhr_.responseText);
-			                }
-			            });
+                        alert("The password does not match the username or the username does not exist!");
+                    else {
+                        window.location.href="Main_page.html?token="+json.token;
                     }
                 },
                 error: function (xhr) {
@@ -75,8 +50,6 @@
                         + xhr.responseText);
                 }
             });
-
-
         });
     });
     $(document).ready(() => {
