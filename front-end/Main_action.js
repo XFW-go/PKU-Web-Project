@@ -30,32 +30,9 @@ function Download(){
     });
 }
 
-function Display_the_files(Path){
-    var auth = new URLSearchParams();         
-    var params = new URLSearchParams();
-    var formData = new FormData();
-    auth.append("token", localstorage.value);
-    params.append("func", "ls");
-    params.append("path", Path);
-    formData.append("auth", auth);
-    formData.append("params", params);
-    $.ajax({
-        url: "/cgi-bin/serve.py", 
-        type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (response) {
-            if(errno==1)
-                alert("Failed");
-            else
-                window.location.href = Path;
-        },
-        error: function (xhr) {
-            alert(xhr.status + " " + xhr.statusText + "\n"
-                + xhr.responseText);
-        }
-    });
+function Display_the_files(files){
+    for(inti i = 0; i <)
+    document.getElementById("file_list").innerHTML = files
 }
 
 function Backpage(Path){
