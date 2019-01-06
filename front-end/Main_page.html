@@ -20,13 +20,14 @@
 
 <!--Display the files-->
 <script>
-	var token = window.location.href.split('=')[1];
+	var token = localstorage.value;
+	var path = window.location.href.split('/')[-1].split('?')[0];
 	var auth = new URLSearchParams();
 	var params = new URLSearchParams();
     var formData = new FormData();
     auth.append("token", token);
     params.append("func", "ls");
-    params.append("path", "/");
+    params.append("path", path);
     formData.append("auth", auth);
     formData.append("params", params);
 
@@ -58,7 +59,7 @@
 <script>
 	$("#Dload").click(Download());
 	$("#Uload").click(Upload($("#file"),$("#proc")));
-	$("#Bpage").click(Backpage());
+	$("#Bpage").click(Backpage(window.location.href.split('/')[:-2].join('/')));
 	$("#Nfolder").click(Makedir());
 	$("#Gbuild").click();
 	$("#Gcheck").click();

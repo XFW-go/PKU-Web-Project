@@ -43,7 +43,7 @@
                     if(json.errno==1)
                         alert("The password does not match the username or the username does not exist!");
                     else {
-                        window.location.href="Main_page.html?token="+json.token;
+                        window.location.href="Main_page.html/"+name; //+"?token="+json.token;
                     }
                 },
                 error: function (xhr) {

@@ -21,7 +21,7 @@ function Download(){
         contentType: false,
         success: function (response) {
             var json = JSON.parse(response);
-            window.location.href = "http://192.168.43.196:8080/cgi-bin/download.py?dl_token="+json.token;
+            window.open("http://192.168.43.196:8080/cgi-bin/download.py?dl_token="+json.token);
         },
         error: function (xhr) {
             alert(xhr.status + " " + xhr.statusText + "\n"
@@ -34,16 +34,67 @@ function Display_the_files(files){
     alert("Not ready");
 }
 
-function Backpage(){
-    alert("Not ready");
+function Backpage(Path){
+    window.location.href = Path;
 }
 
-function Delete_file(){
-    alert("Not ready");
+// Post a rm request and refresh the page
+function Delete_file(Path, Filename){
+    var auth = new URLSearchParams();         
+    var params = new URLSearchParams();
+    var formData = new FormData();
+    auth.append("token", localstorage.value);
+    params.append("func", "rm");
+    params.append("path", Path);
+    params.append("filename", Filename);
+    formData.append("auth", auth);
+    formData.append("params", params);
+    $.ajax({
+        url: "/cgi-bin/serve.py", 
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+            if(errno==1)
+                alert("Failed");
+            else
+                window.location.href = Path; // 可以采用refresh？
+        },
+        error: function (xhr) {
+            alert(xhr.status + " " + xhr.statusText + "\n"
+                + xhr.responseText);
+        }
+    });
 }
 
-function Makedir(){
-    alert("Not ready");
+function Makedir(Path, Dirname){
+    var auth = new URLSearchParams();         
+    var params = new URLSearchParams();
+    var formData = new FormData();
+    auth.append("token", localstorage.value);
+    params.append("func", "mkdir");
+    params.append("path", Path);
+    params.append("filename", Dirname);
+    formData.append("auth", auth);
+    formData.append("params", params);
+    $.ajax({
+        url: "/cgi-bin/serve.py", 
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+            if(errno==1)
+                alert("Failed");
+            else
+                window.location.href = Path; // 可以采用refresh？
+        },
+        error: function (xhr) {
+            alert(xhr.status + " " + xhr.statusText + "\n"
+                + xhr.responseText);
+        }
+    });
 }
 
 function Copyfile(){
