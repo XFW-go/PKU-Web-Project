@@ -1,11 +1,16 @@
+/*
+用户主界面所需的js函数
+*/
+
+// 下载文件
 function Download(){
-	var auth = new URLSearchParams();         
+    var auth = new URLSearchParams();         
     var params = new URLSearchParams();
     var formData = new FormData();
     params.append("user", "abc");
     params.append("func", "download");
-    params.append("path", "/abc/")
-    params.append("filename", "a.py")
+    params.append("path", "/abc/");
+    params.append("filename", "a.py");
     formData.append("auth", auth);
     formData.append("params", params);
     $.ajax({
@@ -15,7 +20,8 @@ function Download(){
         processData: false,
         contentType: false,
         success: function (response) {
-            alert(response)
+            var json = JSON.parse(response);
+            window.location.href = "http://192.168.43.196:8080/cgi-bin/download.py?dl_token="+json.token;
         },
         error: function (xhr) {
             alert(xhr.status + " " + xhr.statusText + "\n"
@@ -24,9 +30,29 @@ function Download(){
     });
 }
 
+function Display_the_files(files){
+    alert("Not ready");
+}
+
+function Backpage(){
+    alert("Not ready");
+}
+
+function Delete_file(){
+    alert("Not ready");
+}
+
+function Makedir(){
+    alert("Not ready");
+}
+
+function Copyfile(){
+    alert("Not ready");
+}
+
 // 上传文件，还有不少需要完善
 function upload(File, Proc){
-	var file = File[0].files[0];
+    var file = File[0].files[0];
     var size = file.size;
     var chuck = 1000000;
     var num = Math.ceil(size / chuck);
@@ -41,7 +67,7 @@ function upload(File, Proc){
         var beg = i * chuck;
         var end = beg + chuck;
         if (end > size)
-            end = size
+            end = size;
         var slice = file.slice(beg, end);
 
         var formData = new FormData();

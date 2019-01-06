@@ -15,6 +15,7 @@
     </div>
 </body>
 <script>
+    // Login
     $(document).ready(() => {
         $("#loginBtn").on("click", function(){
             var name = $("#username").val();
@@ -52,6 +53,8 @@
             });
         });
     });
+
+    // Registeration
     $(document).ready(() => {
         $("#registBtn").on("click", function(){
             localStorage.name = $("#username").val();
@@ -72,7 +75,11 @@
                 processData: false,
                 contentType: false,
                 success: function (response) {
-                    alert("You've already registered!\nPlease log in.");
+                    var json = JSON.parse(response);
+                    if(json.errno==1)
+                        alert('Oops! The username has already been used!');
+                    else
+                        alert("You've already registered!\nPlease log in.");
                 },
                 error: function (xhr) {
                     alert(xhr.status + " " + xhr.statusText + "\n"
