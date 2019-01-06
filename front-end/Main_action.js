@@ -31,7 +31,6 @@ function Download(){
 }
 
 function Display_the_files(files){
-    for(inti i = 0; i <)
     document.getElementById("file_list").innerHTML = files
 }
 
