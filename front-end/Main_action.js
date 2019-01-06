@@ -31,7 +31,8 @@ function Download(){
 }
 
 function Display_the_files(files){
-    alert("Not ready");
+    for(inti i = 0; i <)
+    document.getElementById("file_list").innerHTML = files
 }
 
 function Backpage(Path){
