@@ -39,11 +39,12 @@
                 contentType: false,
                 success: function (response) {
                     var json = JSON.parse(response);
-                    localstorage.value = json.token;
+                    localStorage.token = json.token;
+                    localStorage.path = "/"+name;
                     if(json.errno==1)
                         alert("The password does not match the username or the username does not exist!");
                     else {
-                        window.location.href="./Main_page.html/"+name; //+"?token="+json.token;
+                        window.location.href="/Main_page.html"; //+"?token="+json.token;
                     }
                 },
                 error: function (xhr) {
@@ -52,10 +53,8 @@
                 }
             });
         });
-    });
 
-    // Registeration
-    $(document).ready(() => {
+        // Registration
         $("#registBtn").on("click", function(){
             var name = $("#username").val();
             var value = $("#password").val();
@@ -88,5 +87,6 @@
             });
         });
     });
+
 </script>
 </html>
