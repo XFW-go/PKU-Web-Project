@@ -31,7 +31,17 @@ function Download(){
 }
 
 function Display_the_files(files){
-    document.getElementById("file_list").innerHTML = files
+    for(var i in files) {
+        var filename = i[0].value;
+        var is_dir = i[1].value;
+        var size = i[2].value;
+        var para = document.createElement("li");
+        var node = document.createTextNode(filename);
+        para.appendChild(node);
+
+        var element = document.getElementById("file_list");
+        element.appendChild(para);
+    }
 }
 
 function Backpage(Path){
