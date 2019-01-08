@@ -61,7 +61,7 @@
 <script>
 	$("#Dload").click(Download());
 	$("#Uload").click(Upload($("#file"),$("#proc")));
-	$("#Bpage").click(Backpage(window.location.href.split('/')[:-2].join('/')));
+	$("#Bpage").click(Backpage(window.location.href.substring(0, window.location.href.lastIndexOf('/'))));
 	$("#Nfolder").click(Makedir());
 	$("#Gbuild").click();
 	$("#Gcheck").click();

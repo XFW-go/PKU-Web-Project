@@ -25,7 +25,7 @@
             var params = new URLSearchParams();
             var formData = new FormData();
             auth.append("user", name);
-            auth.append("password", value);            
+            auth.append("passwd", value);            
             params.append("func", "login");
             formData.append("auth", auth);
             formData.append("params", params);
@@ -43,7 +43,7 @@
                     if(json.errno==1)
                         alert("The password does not match the username or the username does not exist!");
                     else {
-                        window.location.href="Main_page.html/"+name; //+"?token="+json.token;
+                        window.location.href="./Main_page.html/"+name; //+"?token="+json.token;
                     }
                 },
                 error: function (xhr) {
@@ -57,14 +57,14 @@
     // Registeration
     $(document).ready(() => {
         $("#registBtn").on("click", function(){
-            localStorage.name = $("#username").val();
-            localStorage.value = $("#password").val();
+            var name = $("#username").val();
+            var value = $("#password").val();
 
             var auth = new URLSearchParams();         
             var params = new URLSearchParams();
             var formData = new FormData();
-            auth.append("user", localStorage.name);
-            auth.append("password", localStorage.value);
+            auth.append("user", name);
+            auth.append("passwd", value);
             params.append("func", "reg");
             formData.append("auth", auth);
             formData.append("params", params);
