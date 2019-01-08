@@ -7,7 +7,6 @@ function Download(){
     var auth = new URLSearchParams();         
     var params = new URLSearchParams();
     var formData = new FormData();
-    params.append("user", "abc");
     params.append("func", "download");
     params.append("path", "/abc/");
     params.append("filename", "a.py");
@@ -21,7 +20,7 @@ function Download(){
         contentType: false,
         success: function (response) {
             var json = JSON.parse(response);
-            window.open("http://192.168.43.196:8080/cgi-bin/download.py?dl_token="+json.token);
+            window.open("/download.py?dl_token="+json.token);
         },
         error: function (xhr) {
             alert(xhr.status + " " + xhr.statusText + "\n"
