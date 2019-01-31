@@ -115,7 +115,7 @@ function click_enter() {
     file_name = localStorage.click_file;
     if (localStorage.path != '/') localStorage.path = localStorage.path + '/' + file_name;
     else localStorage.path = '/' + file_name;
-    window.location.href = window.location.href;
+    window.location.href = "/Main_page.html";
 }
 
 function pasd(file_name) {
